@@ -10,7 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.86.0",
-    "express-session": "^1.15.3"
+    "express-session": "^1.15.3",
+    "moment": "^2.18.1"
   },
   "devDependencies": {
     "babel-core": "^6.24.0",
@@ -20,7 +21,8 @@
     "eslint": "^3.19.0",
     "eslint-config-airbnb-base": "^11.2.0",
     "eslint-plugin-import": "^2.7.0",
-    "jest": "^20.0.4"
+    "jest": "^20.0.4",
+    "uuid": "^3.1.0"
   },
   "jest": {
     "testEnvironment": "node",
