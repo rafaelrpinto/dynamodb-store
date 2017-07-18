@@ -2,10 +2,7 @@
   "name": "dynamodb-session-store",
   "version": "1.0.0",
   "description": "DynamoDB session store for express 4.x",
-  "author": {
-    "name": "Rafael Pinto",
-    "email": "raprp@posteo.de"
-  },
+  "author": "Rafael Pinto <raprp@posteo.de>",
   "main": "./dist/DynamoDBStore.js",
   "readmeFilename": "README.md",
   "engines": {
@@ -15,7 +12,6 @@
     "test": "jest",
     "build": "babel lib --ignore lib/*.test.* -d dist"
   },
-  "author": "",
   "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.86.0",
