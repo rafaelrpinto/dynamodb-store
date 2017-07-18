@@ -1,5 +1,5 @@
 {
-  "name": "dynamodb-session-store",
+  "name": "dynamodb-store",
   "version": "0.0.1-alpha",
   "description": "DynamoDB session store for express 4.x",
   "author": "Rafael Pinto <raprp@posteo.de>",
