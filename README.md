@@ -29,12 +29,10 @@ This store implements the [touch](https://github.com/expressjs/session#resave) m
     "readCapacityUnits": 10,
     "writeCapacityUnits": 10
   },
-  "awsConfig": {
+  "dynamoConfig": {
     "accessKeyId": "<AWS ACCESS KEY>",
     "secretAccessKey": "<AWS ACCESS KEY SECRET>",
     "region": "<AWS REGION>",
-  },
-  "dynamoConfig": {
     "endpoint": "<DYNAMO ENDPOINT>",
   },
   "ttl": 600000
@@ -43,9 +41,7 @@ This store implements the [touch](https://github.com/expressjs/session#resave) m
 
 The `table` configuration is optional. The missing properties will be replaced by [defaults](https://github.com/rafaelrpinto/dynamodb-store/blob/master/lib/constants.js). `readCapacityUnits` and `writeCapacityUnits` are only used if the table is created by this store.
 
-The `awsConfig` can be optional if the following environment variables are set: **AWS_ACCESS_KEY_ID**, **AWS_SECRET_ACCESS_KEY** and **AWS_DEFAULT_REGION**. Any other property from the [AWS.Config constructor](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Config.html#constructor-property) can be informed in this structure.
-
-The `dynamoConfig` is optional and the `endpoint` property may also be informed via the environment variable **AWS_DYNAMO_ENDPOINT**. Any other property from the [AWS.DynamoDB constructor](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#constructor-property) can be informed in this structure.
+The `dynamoConfig` can be optional if the following environment variables are set: **AWS_ACCESS_KEY_ID**, **AWS_SECRET_ACCESS_KEY** and **AWS_REGION**. Any other property from the [AWS.DynamoDB constructor](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#constructor-property) can be informed in this structure.
 
 The `ttl` property is optional and represents the server-side controlled time to live of the sessions (in ms). See more below.
 
@@ -106,7 +102,7 @@ If you want to test with a different DynamoDB configuration, edit the variables 
     "env": {
       "AWS_ACCESS_KEY_ID": "dummyKey",
       "AWS_SECRET_ACCESS_KEY": "dummySecret",
-      "AWS_DEFAULT_REGION": "eu-west-2",
+      "AWS_REGION": "eu-west-2",
       "AWS_DYNAMO_ENDPOINT":"http://localhost:8000"
     }
   }

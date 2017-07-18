@@ -89,15 +89,14 @@ var DynamoDBStore = function (_Store) {
     _this.ttl = options.ttl ? options.ttl : _constants.DEFAULT_TTL;
 
     // Retrieves basic credentials/endpoint configs from the options
-    var awsConfig = (0, _util.getAwsConfig)(options);
-    _awsSdk2.default.config.update(awsConfig);
-    // merges all the options for dynamo client
     var dynamoConfig = options.dynamoConfig ? options.dynamoConfig : {};
-    dynamoConfig = (0, _extends3.default)({}, dynamoConfig, awsConfig, {
+    dynamoConfig = (0, _extends3.default)({}, dynamoConfig, {
       apiVersion: _constants.API_VERSION
     });
     _this.dynamoService = new _awsSdk2.default.DynamoDB(dynamoConfig);
-    _this.documentClient = new _awsSdk2.default.DynamoDB.DocumentClient(null, _this.dynamoService);
+    _this.documentClient = new _awsSdk2.default.DynamoDB.DocumentClient({
+      service: _this.dynamoService
+    });
 
     // creates the table if necessary
     _this.dynamoService.describeTable({

@@ -1,7 +1,7 @@
 import AWS from 'aws-sdk';
 import uuidv4 from 'uuid/v4';
 import DynamoDBStore from '../lib/DynamoDBStore';
-import { toSecondsEpoch, getAwsConfig } from '../lib/util';
+import { toSecondsEpoch } from '../lib/util';
 import { DEFAULT_TABLE_NAME, DEFAULT_TTL } from '../lib/constants';
 
 const TEST_OPTIONS = {
@@ -15,14 +15,10 @@ const TEST_OPTIONS = {
   },
 };
 
-const config = getAwsConfig(TEST_OPTIONS);
-AWS.config.update(config);
-
-const dynamoService = new AWS.DynamoDB({
-  ...config,
-  ...TEST_OPTIONS.dynamoConfig,
+const dynamoService = new AWS.DynamoDB(TEST_OPTIONS.dynamoConfig);
+const documentClient = new AWS.DynamoDB.DocumentClient({
+  service: dynamoService,
 });
-const documentClient = new AWS.DynamoDB.DocumentClient(null, dynamoService);
 
 beforeAll(async () => {
   const params = {
@@ -82,7 +78,7 @@ describe('DynamoDBStore', () => {
 
   it('should create a store with default table values', () =>
     new Promise((resolve, reject) => {
-      const options = {};
+      const options = { dynamoConfig: TEST_OPTIONS.dynamoConfig };
       const store = new DynamoDBStore(options, (err) => {
         try {
           expect(err).toBeUndefined();
