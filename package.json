@@ -1,10 +1,19 @@
 {
-  "name": "dynamo-store",
+  "name": "dynamodb-session-store",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "DynamoDB session store for express 4.x",
+  "author": {
+    "name": "Rafael Pinto",
+    "email": "raprp@posteo.de"
+  },
+  "main": "./dist/DynamoDBStore.js",
+  "readmeFilename": "README.md",
+  "engines": {
+    "node": ">=6.0.0"
+  },
   "scripts": {
-    "test": "AWS_ACCESS_KEY_ID='localtest' AWS_SECRET_ACCESS_KEY='localtest' jest"
+    "test": "AWS_ACCESS_KEY_ID='localtest' AWS_SECRET_ACCESS_KEY='localtest' jest",
+    "build": "babel lib --ignore lib/*.test.* -d dist"
   },
   "author": "",
   "license": "ISC",
@@ -14,6 +23,7 @@
     "moment": "^2.18.1"
   },
   "devDependencies": {
+    "babel-cli": "^6.24.1",
     "babel-core": "^6.24.0",
     "babel-jest": "^19.0.0",
     "babel-preset-es2015": "^6.24.0",
