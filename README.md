@@ -87,7 +87,9 @@ app.use(session({
 
 ## Installation
 
-TODO
+`yarn add dynamodb-store`
+or
+`npm install --save dynamodb-store`
 
 ## Testing
 
