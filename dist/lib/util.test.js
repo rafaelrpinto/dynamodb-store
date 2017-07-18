@@ -1,30 +1,32 @@
-import { toSecondsEpoch, getAwsConfig } from './util';
+'use strict';
 
-describe('util', () => {
-  it('should calculate the seconds epoch for a date', () => {
-    const date = new Date('2017-07-18T00:00:00.000Z');
-    const asSeconds = toSecondsEpoch(date);
+var _util = require('./util');
+
+describe('util', function () {
+  it('should calculate the seconds epoch for a date', function () {
+    var date = new Date('2017-07-18T00:00:00.000Z');
+    var asSeconds = (0, _util.toSecondsEpoch)(date);
     expect(asSeconds).toBe(1500336000);
   });
 
-  it('should raise an error for non-date argument', () => {
-    expect(() => {
-      toSecondsEpoch({});
+  it('should raise an error for non-date argument', function () {
+    expect(function () {
+      (0, _util.toSecondsEpoch)({});
     }).toThrow();
   });
 
-  it('should create a configuration with the informed parameters', () => {
-    const options = {
+  it('should create a configuration with the informed parameters', function () {
+    var options = {
       awsConfig: {
         accessKeyId: 'A1',
         secretAccessKey: 'A2',
-        region: 'R1',
+        region: 'R1'
       },
       dynamoConfig: {
-        endpoint: 'E1',
-      },
+        endpoint: 'E1'
+      }
     };
-    const config = getAwsConfig(options);
+    var config = (0, _util.getAwsConfig)(options);
     expect(config).toBeDefined();
     expect(config.accessKeyId).toBe(options.awsConfig.accessKeyId);
     expect(config.secretAccessKey).toBe(options.awsConfig.secretAccessKey);
@@ -32,8 +34,8 @@ describe('util', () => {
     expect(config.endpoint).toBe(options.dynamoConfig.endpoint);
   });
 
-  it('should create a configuration using env vars', () => {
-    const config = getAwsConfig({});
+  it('should create a configuration using env vars', function () {
+    var config = (0, _util.getAwsConfig)({});
     expect(config).toBeDefined();
     expect(config.accessKeyId).toBe(process.env.AWS_ACCESS_KEY_ID);
     expect(config.secretAccessKey).toBe(process.env.AWS_SECRET_ACCESS_KEY);

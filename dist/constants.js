@@ -16,5 +16,5 @@ var DEFAULT_CALLBACK = exports.DEFAULT_CALLBACK = function DEFAULT_CALLBACK(err)
   }
 };
 
-// aws-sdk
+// aws
 var API_VERSION = exports.API_VERSION = '2012-08-10';

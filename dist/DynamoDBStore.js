@@ -34,9 +34,17 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+/**
+ * Express.js session store fro DynamoDB.
+ */
 var DynamoDBStore = function (_Store) {
   _inherits(DynamoDBStore, _Store);
 
+  /**
+   * Constructor.
+   * @param  {Object} options                Store options.
+   * @param  {Function} callback Optional callback for table creation.
+   */
   function DynamoDBStore() {
     var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
     var callback = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _constants.DEFAULT_CALLBACK;
@@ -55,16 +63,15 @@ var DynamoDBStore = function (_Store) {
     // time to live
     _this.ttl = options.ttl ? options.ttl : _constants.DEFAULT_TTL;
 
-    // AWS setup options
-    if (!options.dynamoParams || !options.dynamoParams.accessKeyId || !options.dynamoParams.secretAccessKey || !options.dynamoParams.region) {
-      throw new Error('Missing AWS parameters');
-    }
-
-    _awsSdk2.default.config.update(options.dynamoParams);
-
-    _this.dynamoService = new _awsSdk2.default.DynamoDB(_extends({}, options.dynamoParams, {
+    // Retrieves basic credentials/endpoint configs from the options
+    var awsConfig = (0, _util.getAwsConfig)(options);
+    _awsSdk2.default.config.update(awsConfig);
+    // merges all the options for dynamo client
+    var dynamoConfig = options.dynamoConfig ? options.dynamoConfig : {};
+    dynamoConfig = _extends({}, dynamoConfig, awsConfig, {
       apiVersion: _constants.API_VERSION
-    }));
+    });
+    _this.dynamoService = new _awsSdk2.default.DynamoDB(dynamoConfig);
     _this.documentClient = new _awsSdk2.default.DynamoDB.DocumentClient(null, _this.dynamoService);
 
     // creates the table if necessary
@@ -77,6 +84,12 @@ var DynamoDBStore = function (_Store) {
     });
     return _this;
   }
+
+  /**
+   * Creates the session table.
+   * @param  {Function} callback Callback to be invoked at the wnd of the execution.
+   */
+
 
   _createClass(DynamoDBStore, [{
     key: 'createTable',
@@ -125,6 +138,14 @@ var DynamoDBStore = function (_Store) {
 
       return createTable;
     }()
+
+    /**
+     * Stores a session.
+     * @param  {String}   sid      Session ID.
+     * @param  {Object}   sess     The session object.
+     * @param  {Function} callback Callback to be invoked at the wnd of the execution.
+     */
+
   }, {
     key: 'set',
     value: function () {
@@ -162,6 +183,13 @@ var DynamoDBStore = function (_Store) {
 
       return set;
     }()
+
+    /**
+     * Retrieves a session from dynamo.
+     * @param  {String}   sid      Session ID.
+     * @param  {Function} callback Callback to be invoked at the wnd of the execution.
+     */
+
   }, {
     key: 'get',
     value: function () {
@@ -175,7 +203,8 @@ var DynamoDBStore = function (_Store) {
                 sessionId = this.getSessionId(sid);
                 params = {
                   TableName: this.tableName,
-                  Key: _defineProperty({}, this.hashKey, sessionId)
+                  Key: _defineProperty({}, this.hashKey, sessionId),
+                  ConsistentRead: true
                 };
                 _context3.next = 5;
                 return this.documentClient.get(params).promise();
@@ -211,6 +240,13 @@ var DynamoDBStore = function (_Store) {
 
       return get;
     }()
+
+    /**
+     * Deletes a session from dynamo.
+     * @param  {String}   sid      Session ID.
+     * @param  {Function} callback Callback to be invoked at the wnd of the execution.
+     */
+
   }, {
     key: 'destroy',
     value: function () {
@@ -254,6 +290,14 @@ var DynamoDBStore = function (_Store) {
 
       return destroy;
     }()
+
+    /**
+     * Updates the expiration time of an existing session.
+     * @param  {String}   sid      Session ID.
+     * @param  {Object}   sess     The session object.
+     * @param  {Function} callback Callback to be invoked at the wnd of the execution.
+     */
+
   }, {
     key: 'touch',
     value: function () {
@@ -295,11 +339,25 @@ var DynamoDBStore = function (_Store) {
 
       return touch;
     }()
+
+    /**
+     * Builds the session ID foe storage.
+     * @param  {String} sid Original session id.
+     * @return {String}     Prefix + original session id.
+     */
+
   }, {
     key: 'getSessionId',
     value: function getSessionId(sid) {
       return '' + this.hashPrefix + sid;
     }
+
+    /**
+     * Calculates the session expiration date.
+     * @param  {Object} sess The session object.
+     * @return {Date}      the session expiration date.
+     */
+
   }, {
     key: 'getExpirationDate',
     value: function getExpirationDate(sess) {
