@@ -56,8 +56,13 @@ var DynamoDBStore = function (_Store) {
     _this.ttl = options.ttl ? options.ttl : _constants.DEFAULT_TTL;
 
     // AWS setup options
-    var dynamoParams = options.dynamoParams ? options.dynamoParams : {};
-    _this.dynamoService = new _awsSdk2.default.DynamoDB(_extends({}, dynamoParams, {
+    if (!options.dynamoParams || !options.dynamoParams.accessKeyId || !options.dynamoParams.secretAccessKey || !options.dynamoParams.region) {
+      throw new Error('Missing AWS parameters');
+    }
+
+    _awsSdk2.default.config.update(options.dynamoParams);
+
+    _this.dynamoService = new _awsSdk2.default.DynamoDB(_extends({}, options.dynamoParams, {
       apiVersion: _constants.API_VERSION
     }));
     _this.documentClient = new _awsSdk2.default.DynamoDB.DocumentClient(null, _this.dynamoService);
@@ -180,23 +185,24 @@ var DynamoDBStore = function (_Store) {
 
                 if (result && result.Item && result.Item.expires && result.Item.expires > (0, _util.toSecondsEpoch)(new Date())) {
                   callback(null, result.Item.sess);
+                } else {
+                  callback(null, null);
                 }
-                callback(null, null);
-                _context3.next = 13;
+                _context3.next = 12;
                 break;
 
-              case 10:
-                _context3.prev = 10;
+              case 9:
+                _context3.prev = 9;
                 _context3.t0 = _context3['catch'](0);
 
                 callback(_context3.t0);
 
-              case 13:
+              case 12:
               case 'end':
                 return _context3.stop();
             }
           }
-        }, _callee3, this, [[0, 10]]);
+        }, _callee3, this, [[0, 9]]);
       }));
 
       function get(_x7, _x8) {
