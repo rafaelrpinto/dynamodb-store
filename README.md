@@ -16,6 +16,8 @@ The project uses the following stack:
 
 The store was tested with Node.js 6 and Express.js 4.x.
 
+** this store implements the [touch](https://github.com/expressjs/session#resave) method to allow express-session configurations to use [resave](https://github.com/expressjs/session#resave): false.
+
 ## Options
 
 ```json
@@ -33,6 +35,7 @@ The store was tested with Node.js 6 and Express.js 4.x.
   "dynamoConfig": {
     "endpoint": "<DYNAMO ENDPOINT>",
   },
+  "ttl": 600000
 }
 ```
 
@@ -41,6 +44,30 @@ The `table` configuration is optional. If not or partially informed defaults wil
 The `awsConfig` can be optional if the following environment variables are set: **AWS_ACCESS_KEY_ID**, **AWS_SECRET_ACCESS_KEY** and **AWS_DEFAULT_REGION**. Any other property from the [AWS.Config constructor](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Config.html#constructor-property) can be informed in this structure.
 
 The `dynamoConfig` is optional and the `endpoint` property may also be informed via the environment variable **AWS_DYNAMO_ENDPOINT**. Any other property from the [AWS.DynamoDB constructor](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#constructor-property) can be informed in this structure.
+
+The `ttl` property is optional and represents the server-side controlled time to live of the sessions. See more below.
+
+## TTL
+
+The time to live of the sessions can controlled:
+
+#### Using cookies with the [cookie.maxAge](https://github.com/expressjs/session#cookiemaxage) property:
+
+If this property is set, the session cookie will have a fixed time to live and the cookie can only be updated if the [rolling](https://github.com/expressjs/session#rolling) session property is set to **true**.
+
+#### Using the TTL property
+
+The `ttl` property implemented by this store defines a session time to live that is refreshed on every request without the need to update the session cookie.
+
+## Removing expired sessions
+
+To keep the table clear of expired sessions you must setup the [Time To Live](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/TTL.html) feature of DynamoDB pointingto the `expires` field.
+
+Bear in mind that DynamoDB's TTL cleanup can take up to 48 hours. Although the expired records will be ignored by the store, they will still be in the table during this period, consuming storage.
+
+If you have high traffic o your application and the 48h wait period causes unnecessary storage costs, consider using [this other store](https://github.com/ca98am79/connect-dynamodb) that has a `reap` mechanism to periodically clear the expired entries.
+
+** Creating a LSI with 'expires' as hash key and periodically deleting the records with old timestamps as hash might work.
 
 ## Usage
 

@@ -5,6 +5,16 @@
   "author": "Rafael Pinto <raprp@posteo.de>",
   "main": "index.js",
   "readmeFilename": "README.md",
+  "license": "MIT",
+  "url": "https://github.com/rafaelrpinto/dynamodb-store",
+  "bugs": {
+    "url": "https://github.com/rafaelrpinto/dynamodb-store/issues",
+    "email": "raprp@posteo.de"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rafaelrpinto/dynamodb-store.git"
+  },
   "engines": {
     "node": ">=6.0.0"
   },
@@ -19,11 +29,10 @@
         "AWS_ACCESS_KEY_ID": "dummyKey",
         "AWS_SECRET_ACCESS_KEY": "dummySecret",
         "AWS_DEFAULT_REGION": "eu-west-2",
-        "AWS_DYNAMO_ENDPOINT":"http://localhost:8000"
+        "AWS_DYNAMO_ENDPOINT": "http://localhost:8000"
       }
     }
   },
-  "license": "MIT",
   "dependencies": {
     "aws-sdk": "^2.86.0",
     "express-session": "^1.15.3",
