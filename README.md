@@ -18,6 +18,13 @@ The project was tested with Node.js 6 and Express.js 4.x but still haven't been 
 
 This store implements the [touch](https://github.com/expressjs/session#resave) method to allow express-session configurations to use [resave](https://github.com/expressjs/session#resave): false.
 
+## Installation
+​
+`yarn add dynamodb-store`
+or
+`npm install --save dynamodb-store`
+
+
 ## Options
 
 ```json
@@ -80,12 +87,7 @@ app.use(session({
     ...
 }));
 ```
-
-## Installation
-
-`yarn add dynamodb-store`
-or
-`npm install --save dynamodb-store`
+I've built a [boilerplate that uses this store](https://github.com/rafaelrpinto/aws-lambda-stateful-express-boilerplate).
 
 ## Testing
 
