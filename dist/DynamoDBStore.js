@@ -4,9 +4,45 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+var _isInteger = require('babel-runtime/core-js/number/is-integer');
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _isInteger2 = _interopRequireDefault(_isInteger);
+
+var _defineProperty2 = require('babel-runtime/helpers/defineProperty');
+
+var _defineProperty3 = _interopRequireDefault(_defineProperty2);
+
+var _regenerator = require('babel-runtime/regenerator');
+
+var _regenerator2 = _interopRequireDefault(_regenerator);
+
+var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
+
+var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
+
+var _extends2 = require('babel-runtime/helpers/extends');
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
+
+var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
+var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = require('babel-runtime/helpers/createClass');
+
+var _createClass3 = _interopRequireDefault(_createClass2);
+
+var _possibleConstructorReturn2 = require('babel-runtime/helpers/possibleConstructorReturn');
+
+var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+var _inherits2 = require('babel-runtime/helpers/inherits');
+
+var _inherits3 = _interopRequireDefault(_inherits2);
 
 var _expressSession = require('express-session');
 
@@ -24,21 +60,11 @@ var _util = require('./util');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 /**
  * Express.js session store fro DynamoDB.
  */
 var DynamoDBStore = function (_Store) {
-  _inherits(DynamoDBStore, _Store);
+  (0, _inherits3.default)(DynamoDBStore, _Store);
 
   /**
    * Constructor.
@@ -48,11 +74,10 @@ var DynamoDBStore = function (_Store) {
   function DynamoDBStore() {
     var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
     var callback = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _constants.DEFAULT_CALLBACK;
-
-    _classCallCheck(this, DynamoDBStore);
+    (0, _classCallCheck3.default)(this, DynamoDBStore);
 
     // table properties
-    var _this = _possibleConstructorReturn(this, (DynamoDBStore.__proto__ || Object.getPrototypeOf(DynamoDBStore)).call(this));
+    var _this = (0, _possibleConstructorReturn3.default)(this, (DynamoDBStore.__proto__ || (0, _getPrototypeOf2.default)(DynamoDBStore)).call(this));
 
     _this.tableName = options.table && options.table.name ? options.table.name : _constants.DEFAULT_TABLE_NAME;
     _this.hashPrefix = options.table && options.table.hashPrefix ? options.table.hashPrefix : _constants.DEFAULT_HASH_PREFIX;
@@ -68,7 +93,7 @@ var DynamoDBStore = function (_Store) {
     _awsSdk2.default.config.update(awsConfig);
     // merges all the options for dynamo client
     var dynamoConfig = options.dynamoConfig ? options.dynamoConfig : {};
-    dynamoConfig = _extends({}, dynamoConfig, awsConfig, {
+    dynamoConfig = (0, _extends3.default)({}, dynamoConfig, awsConfig, {
       apiVersion: _constants.API_VERSION
     });
     _this.dynamoService = new _awsSdk2.default.DynamoDB(dynamoConfig);
@@ -91,12 +116,12 @@ var DynamoDBStore = function (_Store) {
    */
 
 
-  _createClass(DynamoDBStore, [{
+  (0, _createClass3.default)(DynamoDBStore, [{
     key: 'createTable',
     value: function () {
-      var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(callback) {
+      var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(callback) {
         var params;
-        return regeneratorRuntime.wrap(function _callee$(_context) {
+        return _regenerator2.default.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
@@ -149,10 +174,10 @@ var DynamoDBStore = function (_Store) {
   }, {
     key: 'set',
     value: function () {
-      var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2(sid, sess, callback) {
+      var _ref2 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2(sid, sess, callback) {
         var _Item, sessionId, expires, params;
 
-        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+        return _regenerator2.default.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
@@ -161,7 +186,7 @@ var DynamoDBStore = function (_Store) {
                   expires = this.getExpirationDate(sess);
                   params = {
                     TableName: this.tableName,
-                    Item: (_Item = {}, _defineProperty(_Item, this.hashKey, sessionId), _defineProperty(_Item, 'expires', (0, _util.toSecondsEpoch)(expires)), _defineProperty(_Item, 'sess', sess), _Item)
+                    Item: (_Item = {}, (0, _defineProperty3.default)(_Item, this.hashKey, sessionId), (0, _defineProperty3.default)(_Item, 'expires', (0, _util.toSecondsEpoch)(expires)), (0, _defineProperty3.default)(_Item, 'sess', sess), _Item)
                   };
 
                   this.documentClient.put(params, callback);
@@ -193,9 +218,9 @@ var DynamoDBStore = function (_Store) {
   }, {
     key: 'get',
     value: function () {
-      var _ref3 = _asyncToGenerator(regeneratorRuntime.mark(function _callee3(sid, callback) {
+      var _ref3 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee3(sid, callback) {
         var sessionId, params, result;
-        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+        return _regenerator2.default.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
@@ -203,7 +228,7 @@ var DynamoDBStore = function (_Store) {
                 sessionId = this.getSessionId(sid);
                 params = {
                   TableName: this.tableName,
-                  Key: _defineProperty({}, this.hashKey, sessionId),
+                  Key: (0, _defineProperty3.default)({}, this.hashKey, sessionId),
                   ConsistentRead: true
                 };
                 _context3.next = 5;
@@ -250,9 +275,9 @@ var DynamoDBStore = function (_Store) {
   }, {
     key: 'destroy',
     value: function () {
-      var _ref4 = _asyncToGenerator(regeneratorRuntime.mark(function _callee4(sid, callback) {
+      var _ref4 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee4(sid, callback) {
         var sessionId, params;
-        return regeneratorRuntime.wrap(function _callee4$(_context4) {
+        return _regenerator2.default.wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
@@ -260,7 +285,7 @@ var DynamoDBStore = function (_Store) {
                 sessionId = this.getSessionId(sid);
                 params = {
                   TableName: this.tableName,
-                  Key: _defineProperty({}, this.hashKey, sessionId)
+                  Key: (0, _defineProperty3.default)({}, this.hashKey, sessionId)
                 };
                 _context4.next = 5;
                 return this.documentClient.delete(params).promise();
@@ -301,9 +326,9 @@ var DynamoDBStore = function (_Store) {
   }, {
     key: 'touch',
     value: function () {
-      var _ref5 = _asyncToGenerator(regeneratorRuntime.mark(function _callee5(sid, sess, callback) {
+      var _ref5 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee5(sid, sess, callback) {
         var sessionId, expires, params;
-        return regeneratorRuntime.wrap(function _callee5$(_context5) {
+        return _regenerator2.default.wrap(function _callee5$(_context5) {
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
@@ -312,7 +337,7 @@ var DynamoDBStore = function (_Store) {
                   expires = this.getExpirationDate(sess);
                   params = {
                     TableName: this.tableName,
-                    Key: _defineProperty({}, this.hashKey, sessionId),
+                    Key: (0, _defineProperty3.default)({}, this.hashKey, sessionId),
                     UpdateExpression: 'set expires = :e',
                     ExpressionAttributeValues: {
                       ':e': (0, _util.toSecondsEpoch)(expires)
@@ -362,7 +387,7 @@ var DynamoDBStore = function (_Store) {
     key: 'getExpirationDate',
     value: function getExpirationDate(sess) {
       var expirationDate = (0, _moment2.default)();
-      if (sess.cookie && Number.isInteger(sess.cookie.maxAge)) {
+      if (sess.cookie && (0, _isInteger2.default)(sess.cookie.maxAge)) {
         expirationDate = expirationDate.add(sess.cookie.maxAge, 'ms');
       } else {
         expirationDate = expirationDate.add(this.ttl, 'ms');
@@ -370,7 +395,6 @@ var DynamoDBStore = function (_Store) {
       return expirationDate.toDate();
     }
   }]);
-
   return DynamoDBStore;
 }(_expressSession.Store);
 
