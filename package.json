@@ -12,7 +12,7 @@
     "node": ">=6.0.0"
   },
   "scripts": {
-    "test": "AWS_ACCESS_KEY_ID='localtest' AWS_SECRET_ACCESS_KEY='localtest' jest",
+    "test": "jest",
     "build": "babel lib --ignore lib/*.test.* -d dist"
   },
   "author": "",
