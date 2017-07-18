@@ -1,4 +1,4 @@
-import { toSecondsEpoch, getAwsConfig } from './util';
+import { toSecondsEpoch, getAwsConfig } from '../lib/util';
 
 describe('util', () => {
   it('should calculate the seconds epoch for a date', () => {

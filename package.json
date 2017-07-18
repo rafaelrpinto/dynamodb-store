@@ -20,7 +20,7 @@
   },
   "scripts": {
     "test": "better-npm-run test",
-    "build": "babel lib --ignore lib/*.test.* -d dist"
+    "build": "rm -rf dist && babel lib -d dist"
   },
   "betterScripts": {
     "test": {
@@ -51,9 +51,10 @@
     "jest": "^20.0.4",
     "uuid": "^3.1.0"
   },
+  "files": ["dist/", "index.js"],
   "jest": {
     "testEnvironment": "node",
-    "rootDir": "lib",
+    "rootDir": "test",
     "transform": {
       "\\.js$": "babel-jest"
     }

@@ -1,8 +1,8 @@
 import AWS from 'aws-sdk';
 import uuidv4 from 'uuid/v4';
-import DynamoDBStore from './DynamoDBStore';
-import { toSecondsEpoch, getAwsConfig } from './util';
-import { DEFAULT_TABLE_NAME, DEFAULT_TTL } from './constants';
+import DynamoDBStore from '../lib/DynamoDBStore';
+import { toSecondsEpoch, getAwsConfig } from '../lib/util';
+import { DEFAULT_TABLE_NAME, DEFAULT_TTL } from '../lib/constants';
 
 const TEST_OPTIONS = {
   table: {
