@@ -9,7 +9,7 @@
     "node": ">=6.0.0"
   },
   "scripts": {
-    "test": "jest",
+    "test": "DYNAMO_TEST_ENDPOINT='http://localhost:8000' jest",
     "build": "babel lib --ignore lib/*.test.* -d dist"
   },
   "license": "ISC",
