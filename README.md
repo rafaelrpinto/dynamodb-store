@@ -1,6 +1,6 @@
 dynamodb-store
 ===============
-![Build Status](https://travis-ci.org/rafaelrpinto/dynamodb-store.svg?branch=master)
+![Build Status](https://travis-ci.org/rafaelrpinto/dynamodb-store.svg?branch=master) [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.png?v=103)](https://github.com/ellerbrock/open-source-badges/) ![Dependencies](https://david-dm.org/rafaelrpinto/dynamodb-store.svg)
 
 Implementation of a session storage using [DynamoDB](https://aws.amazon.com/dynamodb/)
 as an extension of the [express-session middleware](https://github.com/expressjs/session).
