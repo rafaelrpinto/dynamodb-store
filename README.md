@@ -25,6 +25,21 @@ or
 `npm install --save dynamodb-store`
 
 
+## Usage
+
+Usage within express:
+
+```javascript
+const session = require("express-session");
+const DynamoDBStore = require('dynamodb-store');
+
+app.use(session({
+    store: new DynamoDBStore(options),
+    ...
+}));
+```
+I've built a [boilerplate that uses this store](https://github.com/rafaelrpinto/aws-lambda-stateful-express-boilerplate).
+
 ## Options
 
 ```json
@@ -54,7 +69,7 @@ The `ttl` property is optional and represents the server-side controlled time to
 
 ## TTL
 
-The time to live of the sessions can controlled:
+The time to live of the sessions can be controlled:
 
 #### Using cookies with the [cookie.maxAge](https://github.com/expressjs/session#cookiemaxage) property:
 
@@ -62,32 +77,17 @@ If this property is set, the session cookie will have a fixed time to live and t
 
 #### Using the TTL property
 
-The `ttl` property implemented by this store defines a session time to live that is refreshed on every request without the need to update the session cookie.
+The `ttl` property implemented by this store defines a session time to live controlled by the server that is refreshed on every request without the need to update the session cookie.
 
 ## Removing expired sessions
 
 To keep the table clear of expired sessions you must setup the [Time To Live](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/TTL.html) feature of DynamoDB pointingto the `expires` field.
 
-Bear in mind that DynamoDB's TTL cleanup can take up to 48 hours. Although the expired records will be ignored by the store, they will still be in the table during this period, consuming storage.
+Bear in mind that DynamoDB's TTL cleanup can take up to 48 hours. Although the expired records will be ignored by the store, they will still be in the table during this period.
 
-If you have high traffic o your application and the 48h wait period causes unnecessary storage costs, consider using [this other store](https://github.com/ca98am79/connect-dynamodb) that has a `reap` mechanism to periodically clear the expired entries.
+If you have intense traffic on your application and the 48h wait period causes unnecessary storage costs, consider using [this other store](https://github.com/ca98am79/connect-dynamodb) that has a `reap` mechanism to periodically clear the expired entries.
 
-** Creating a LSI with 'expires' as hash key and periodically deleting the records with old timestamps as hash might work.
-
-## Usage
-
-Usage within express:
-
-```javascript
-const session = require("express-session");
-const DynamoDBStore = require('dynamodb-store');
-
-app.use(session({
-    store: new DynamoDBStore(options),
-    ...
-}));
-```
-I've built a [boilerplate that uses this store](https://github.com/rafaelrpinto/aws-lambda-stateful-express-boilerplate).
+Creating a LSI with **'expires'** as hash key and a scheduled lambda function to periodically delete expired records might be the best option.
 
 ## Testing
 
