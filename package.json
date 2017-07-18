@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "DynamoDB session store for express 4.x",
   "author": "Rafael Pinto <raprp@posteo.de>",
-  "main": "./dist/DynamoDBStore.js",
+  "main": "index.js",
   "readmeFilename": "README.md",
   "engines": {
     "node": ">=6.0.0"
