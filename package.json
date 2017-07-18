@@ -1,6 +1,6 @@
 {
   "name": "dynamodb-store",
-  "version": "0.0.1-alpha",
+  "version": "0.0.1-alpha.2",
   "description": "DynamoDB session store for express 4.x",
   "author": "Rafael Pinto <raprp@posteo.de>",
   "main": "index.js",
@@ -52,15 +52,13 @@
     "jest": "^20.0.4",
     "uuid": "^3.1.0"
   },
-  "files": [
-    "dist/",
-    "index.js"
-  ],
+  "files": ["dist/", "index.js"],
   "jest": {
     "testEnvironment": "node",
     "rootDir": "test",
     "transform": {
       "\\.js$": "babel-jest"
     }
-  }
+  },
+  "keywords": ["dynamo", "dynamodb", "session", "session-store", "express-session", "express"]
 }
