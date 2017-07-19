@@ -15,7 +15,7 @@ The project uses the following stack:
 - Jest
 - Yarn
 
-The project was tested with Node.js 6 and Express.js 4.x. It's a new project so use at your own risk.
+The project was tested with Node.js 6 and Express.js 4.x.
 
 This store implements the [touch](https://github.com/expressjs/session#resave) method to allow express-session configurations to use [resave](https://github.com/expressjs/session#resave): false.
 
@@ -117,7 +117,7 @@ If you want to test with a different DynamoDB configuration, edit the variables 
 
 ## Debugging
 
-To enable debug logging of the store set the environment variable **DYNAMODB_STORE_DEBUG** to true and all the methods will log to console:
+To enable debug logging of the store, set the environment variable **DYNAMODB_STORE_DEBUG** to **true** and all the store method calls show in the console:
 
 ```bash
 Wed Jul 19 2017 23:16:04 GMT+0100 (WEST) - DYNAMODB_STORE: Skipping touch of session 'vn31s3sl3k5fHiHs1saMXNEyb_hEp1KS'
