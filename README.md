@@ -1,6 +1,6 @@
 dynamodb-store
 ===============
-![Build Status](https://travis-ci.org/rafaelrpinto/dynamodb-store.svg?branch=master) [![Coverage Status](https://coveralls.io/repos/github/rafaelrpinto/dynamodb-store/badge.svg?branch=master)](https://coveralls.io/github/rafaelrpinto/dynamodb-store?branch=master) ![Dependencies](https://david-dm.org/rafaelrpinto/dynamodb-store.svg) [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.png?v=103)](https://github.com/ellerbrock/open-source-badges/)
+![Build Status](https://travis-ci.org/rafaelrpinto/dynamodb-store.svg?branch=master) [![Coverage Status](https://coveralls.io/repos/github/rafaelrpinto/dynamodb-store/badge.svg?branch=master)](https://coveralls.io/github/rafaelrpinto/dynamodb-store?branch=master) ![Dependencies](https://david-dm.org/rafaelrpinto/dynamodb-store.svg) [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.png?v=103)](https://github.com/ellerbrock/open-source-badges/) ![NPM Downloads](https://img.shields.io/npm/dt/dynamodb-store.svg)
 
 Implementation of a session storage using [DynamoDB](https://aws.amazon.com/dynamodb/)
 as an extension of the [express-session middleware](https://github.com/expressjs/session).
