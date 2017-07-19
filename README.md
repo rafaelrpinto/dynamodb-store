@@ -57,7 +57,7 @@ I've built a [boilerplate that uses this store](https://github.com/rafaelrpinto/
     "region": "<AWS REGION>",
     "endpoint": "<DYNAMO ENDPOINT>",
   },
-  "touchInterval": 0,
+  "touchInterval": 30000,
   "ttl": 600000,
 }
 ```
