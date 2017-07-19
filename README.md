@@ -88,8 +88,9 @@ To keep the table clear of expired sessions you must setup the [Time To Live](ht
 
 Bear in mind that DynamoDB's TTL cleanup can take up to 48 hours. Although the expired records will be ignored by the store, they will still be in the table during this period.
 
-If you have intense traffic on your application and the 48h wait period causes unnecessary storage costs, consider using [this other store](https://github.com/ca98am79/connect-dynamodb) that has a `reap` mechanism to periodically clear the expired entries.
+If you have intense traffic on your application and the 48h wait period causes unnecessary storage costs, consider creating a scheduled lambda function that scans few records a a time and clears the expired.
 
+If you really want the store to be responsible for that use [this other store](https://github.com/ca98am79/connect-dynamodb) that has a `reap` mechanism to periodically clear the expired entries.
 
 ## Testing
 
