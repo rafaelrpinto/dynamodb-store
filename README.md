@@ -90,7 +90,6 @@ Bear in mind that DynamoDB's TTL cleanup can take up to 48 hours. Although the e
 
 If you have intense traffic on your application and the 48h wait period causes unnecessary storage costs, consider using [this other store](https://github.com/ca98am79/connect-dynamodb) that has a `reap` mechanism to periodically clear the expired entries.
 
-Creating a LSI with **'expires'** as hash key and a scheduled lambda function to periodically delete expired records might be the best option.
 
 ## Testing
 
