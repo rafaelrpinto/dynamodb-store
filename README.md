@@ -66,7 +66,7 @@ The `table` configuration is optional. The missing properties will be replaced b
 
 The `dynamoConfig` can be optional if the following environment variables are set: **AWS_ACCESS_KEY_ID**, **AWS_SECRET_ACCESS_KEY** and **AWS_REGION**. Any other property from the [AWS.DynamoDB constructor](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#constructor-property) can be informed in this structure.
 
-The `touchInterval` property prevents that every request results on a table write by setting an interval between touches of a session. By default the interval is 30 seconds.
+The `touchInterval` property defines how ofter requests should update the time to live of a session. This property is important to avoid unnecessary table writes. By default the interval allows one touch every 30 seconds. `touchInterval` = 0 will cause a touch on every request.
 
 The `ttl` property is optional and represents the server-side controlled time to live of the sessions (in ms). See more below.
 
@@ -80,7 +80,7 @@ If this property is set, the session cookie will have a fixed time to live and t
 
 #### Using the TTL property
 
-The `ttl` property implemented by this store defines a session time to live controlled by the server that is refreshed on every request without the need to update the session cookie.
+The `ttl` property implemented by this store defines a session time to live controlled by the server that is refreshed based on the `touchInterval` property without the need to update the session cookie.
 
 ## Removing expired sessions
 
