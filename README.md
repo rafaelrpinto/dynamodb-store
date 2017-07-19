@@ -47,7 +47,7 @@ I've built a [boilerplate that uses this store](https://github.com/rafaelrpinto/
 {
   "table": {
     "name": "<NAME OF THE DYNAMO TABLE>",
-    "hashKey": "<NAME OD THE ID FIELD>",
+    "hashKey": "<NAME OF THE ID FIELD>",
     "hashPrefix": "<PREFIX FOR THE SESSION ID VALUES>",
     "readCapacityUnits": 10,
     "writeCapacityUnits": 10
