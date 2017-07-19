@@ -76,9 +76,10 @@ var DynamoDBStore = function (_Store) {
     var callback = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _constants.DEFAULT_CALLBACK;
     (0, _classCallCheck3.default)(this, DynamoDBStore);
 
-    // table properties
     var _this = (0, _possibleConstructorReturn3.default)(this, (DynamoDBStore.__proto__ || (0, _getPrototypeOf2.default)(DynamoDBStore)).call(this));
 
+    (0, _util.debug)('Initializing store', options);
+    // table properties
     _this.tableName = options.table && options.table.name ? options.table.name : _constants.DEFAULT_TABLE_NAME;
     _this.hashPrefix = options.table && options.table.hashPrefix ? options.table.hashPrefix : _constants.DEFAULT_HASH_PREFIX;
     _this.hashKey = options.table && options.table.hashKey ? options.table.hashKey : _constants.DEFAULT_HASH_KEY;
@@ -102,7 +103,8 @@ var DynamoDBStore = function (_Store) {
     _this.dynamoService.describeTable({
       TableName: _this.tableName
     }).promise().then(function () {
-      return callback();
+      (0, _util.debug)('Table ' + _this.tableName + ' already exists.', options);
+      callback();
     }).catch(function () {
       return _this.createTable(callback);
     });
@@ -138,22 +140,24 @@ var DynamoDBStore = function (_Store) {
                 return this.dynamoService.createTable(params).promise();
 
               case 4:
+                (0, _util.debug)('Table ' + this.tableName + ' created', params);
                 callback();
-                _context.next = 10;
+                _context.next = 12;
                 break;
 
-              case 7:
-                _context.prev = 7;
+              case 8:
+                _context.prev = 8;
                 _context.t0 = _context['catch'](0);
 
+                (0, _util.debug)('Error creating table ' + this.tableName, _context.t0);
                 callback(_context.t0);
 
-              case 10:
+              case 12:
               case 'end':
                 return _context.stop();
             }
           }
-        }, _callee, this, [[0, 7]]);
+        }, _callee, this, [[0, 8]]);
       }));
 
       function createTable(_x3) {
@@ -190,8 +194,14 @@ var DynamoDBStore = function (_Store) {
                     })), _Item)
                   };
 
+                  (0, _util.debug)('Saving session \'' + sid + '\'', sess);
                   this.documentClient.put(params, callback);
                 } catch (err) {
+                  (0, _util.debug)('Error saving session', {
+                    sid: sid,
+                    sess: sess,
+                    err: err
+                  });
                   callback(err);
                 }
 
@@ -239,20 +249,23 @@ var DynamoDBStore = function (_Store) {
                 result = _context3.sent;
 
                 if (result && result.Item && result.Item.expires && result.Item.expires > (0, _util.toSecondsEpoch)(new Date())) {
+                  (0, _util.debug)('Session \'' + sid + '\' found', result.Item.sess);
                   callback(null, result.Item.sess);
                 } else {
+                  (0, _util.debug)('Session \'' + sid + '\' not found');
                   callback(null, null);
                 }
-                _context3.next = 12;
+                _context3.next = 13;
                 break;
 
               case 9:
                 _context3.prev = 9;
                 _context3.t0 = _context3['catch'](0);
 
+                (0, _util.debug)('Error getting session \'' + sid + '\'', _context3.t0);
                 callback(_context3.t0);
 
-              case 12:
+              case 13:
               case 'end':
                 return _context3.stop();
             }
@@ -292,22 +305,24 @@ var DynamoDBStore = function (_Store) {
                 return this.documentClient.delete(params).promise();
 
               case 5:
+                (0, _util.debug)('Destroyed session \'' + sid + '\'');
                 callback(null);
-                _context4.next = 11;
+                _context4.next = 13;
                 break;
 
-              case 8:
-                _context4.prev = 8;
+              case 9:
+                _context4.prev = 9;
                 _context4.t0 = _context4['catch'](0);
 
+                (0, _util.debug)('Error destroying session \'' + sid + '\'', _context4.t0);
                 callback(_context4.t0);
 
-              case 11:
+              case 13:
               case 'end':
                 return _context4.stop();
             }
           }
-        }, _callee4, this, [[0, 8]]);
+        }, _callee4, this, [[0, 9]]);
       }));
 
       function destroy(_x9, _x10) {
@@ -351,11 +366,14 @@ var DynamoDBStore = function (_Store) {
                       ReturnValues: 'UPDATED_NEW'
                     };
 
+                    (0, _util.debug)('Touching session \'' + sid + '\'');
                     this.documentClient.update(params, callback);
                   } else {
+                    (0, _util.debug)('Skipping touch of session \'' + sid + '\'');
                     callback(null);
                   }
                 } catch (err) {
+                  (0, _util.debug)('Error touching session \'' + sid + '\'', err);
                   callback(err);
                 }
 

@@ -115,6 +115,16 @@ If you want to test with a different DynamoDB configuration, edit the variables 
 }
 ```
 
+## Debugging
+
+To enable debug logging of the store set the environment variable **DYNAMODB_STORE_DEBUG** to true and all the methods will log to console:
+
+```bash
+Wed Jul 19 2017 23:16:04 GMT+0100 (WEST) - DYNAMODB_STORE: Skipping touch of session 'vn31s3sl3k5fHiHs1saMXNEyb_hEp1KS'
+Wed Jul 19 2017 23:16:06 GMT+0100 (WEST) - DYNAMODB_STORE: Session 'vn31s3sl3k5fHiHs1saMXNEyb_hEp1KS' found {"csrfSecret":"ZeYyyZyHv1rADky_hmiYt40e","cookie":{"path":"/","expires":null,"_expires":null,"data":{"path":"/","expires":null,"httpOnly":true,"secure":true,"originalMaxAge":null,"sameSite":true},"maxAge":null,"sameSite":true,"httpOnly":true,"secure":true,"originalMaxAge":null},"updated":1500502536135,"user":{"firstName":"Shaylee","lastName":"Robel","avatar":"https://s3.amazonaws.com/uifaces/faces/twitter/yassiryahya/128.jpg"}}
+Wed Jul 19 2017 23:16:06 GMT+0100 (WEST) - DYNAMODB_STORE: Touching session 'vn31s3sl3k5fHiHs1saMXNEyb_hEp1KS'
+```
+
 ## References
 
 This project used [connect-dynamodb](https://github.com/ca98am79/connect-dynamodb) and [cassandra-store](https://github.com/webcc/cassandra-store) as reference for implementation/documentation.

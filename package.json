@@ -29,7 +29,8 @@
         "AWS_ACCESS_KEY_ID": "dummyKey",
         "AWS_SECRET_ACCESS_KEY": "dummySecret",
         "AWS_REGION": "eu-west-2",
-        "AWS_DYNAMO_ENDPOINT": "http://localhost:8000"
+        "AWS_DYNAMO_ENDPOINT": "http://localhost:8000",
+        "DYNAMODB_STORE_DEBUG": "true"
       }
     }
   },
@@ -54,10 +55,7 @@
     "jest": "^20.0.4",
     "uuid": "^3.1.0"
   },
-  "files": [
-    "dist/",
-    "index.js"
-  ],
+  "files": ["dist/", "index.js"],
   "jest": {
     "testEnvironment": "node",
     "rootDir": "test",
@@ -65,12 +63,5 @@
       "\\.js$": "babel-jest"
     }
   },
-  "keywords": [
-    "dynamo",
-    "dynamodb",
-    "session",
-    "session-store",
-    "express-session",
-    "express"
-  ]
+  "keywords": ["dynamo", "dynamodb", "session", "session-store", "express-session", "express"]
 }
