@@ -1,6 +1,6 @@
 dynamodb-store
 ===============
-![Build Status](https://travis-ci.org/rafaelrpinto/dynamodb-store.svg?branch=master) [![Coverage Status](https://coveralls.io/repos/github/rafaelrpinto/dynamodb-store/badge.svg?branch=master)](https://coveralls.io/github/rafaelrpinto/dynamodb-store?branch=master) ![Dependencies](https://david-dm.org/rafaelrpinto/dynamodb-store.svg) [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.png?v=103)](https://github.com/ellerbrock/open-source-badges/) ![NPM Downloads](https://img.shields.io/npm/dt/dynamodb-store.svg) ![NPM version](https://img.shields.io/npm/v/dynamodb-store.svg)   ![rich](https://img.shields.io/badge/Become%20a%20millionaire-failing-red.svg)
+![Build Status](https://travis-ci.org/rafaelrpinto/dynamodb-store.svg?branch=master) [![Coverage Status](https://coveralls.io/repos/github/rafaelrpinto/dynamodb-store/badge.svg?branch=master)](https://coveralls.io/github/rafaelrpinto/dynamodb-store?branch=master) ![Dependencies](https://david-dm.org/rafaelrpinto/dynamodb-store.svg) ![NPM Downloads](https://img.shields.io/npm/dt/dynamodb-store.svg) ![NPM version](https://img.shields.io/npm/v/dynamodb-store.svg) [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.png?v=103)](https://github.com/ellerbrock/open-source-badges/) ![rich](https://img.shields.io/badge/Become%20a%20millionaire-failing-red.svg)
 
 
 Implementation of a session storage using [DynamoDB](https://aws.amazon.com/dynamodb/)
@@ -47,7 +47,7 @@ I've built a [boilerplate that uses this store](https://github.com/rafaelrpinto/
 {
   "table": {
     "name": "<NAME OF THE DYNAMO TABLE>",
-    "hashKey": "<NAME OD THE ID FIELD>",
+    "hashKey": "<NAME OF THE ID FIELD>",
     "hashPrefix": "<PREFIX FOR THE SESSION ID VALUES>",
     "readCapacityUnits": 10,
     "writeCapacityUnits": 10
