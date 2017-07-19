@@ -14,7 +14,7 @@ The project uses the following stack:
 - Jest
 - Yarn
 
-The project was tested with Node.js 6 and Express.js 4.x but still haven't been tested in production, so use at your own risk.
+The project was tested with Node.js 6 and Express.js 4.x. It's a new project so use at your own risk.
 
 This store implements the [touch](https://github.com/expressjs/session#resave) method to allow express-session configurations to use [resave](https://github.com/expressjs/session#resave): false.
 
@@ -57,13 +57,16 @@ I've built a [boilerplate that uses this store](https://github.com/rafaelrpinto/
     "region": "<AWS REGION>",
     "endpoint": "<DYNAMO ENDPOINT>",
   },
-  "ttl": 600000
+  "touchInterval": 0,
+  "ttl": 600000,
 }
 ```
 
 The `table` configuration is optional. The missing properties will be replaced by [defaults](https://github.com/rafaelrpinto/dynamodb-store/blob/master/lib/constants.js). `readCapacityUnits` and `writeCapacityUnits` are only used if the table is created by this store.
 
 The `dynamoConfig` can be optional if the following environment variables are set: **AWS_ACCESS_KEY_ID**, **AWS_SECRET_ACCESS_KEY** and **AWS_REGION**. Any other property from the [AWS.DynamoDB constructor](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#constructor-property) can be informed in this structure.
+
+The `touchInterval` property prevents that every request results on a table write by setting an interval between touches of a session. By default the interval is 30 seconds.
 
 The `ttl` property is optional and represents the server-side controlled time to live of the sessions (in ms). See more below.
 

@@ -84,7 +84,7 @@ var DynamoDBStore = function (_Store) {
     _this.hashKey = options.table && options.table.hashKey ? options.table.hashKey : _constants.DEFAULT_HASH_KEY;
     _this.readCapacityUnits = options.table && options.table.readCapacityUnits ? Number(options.table.readCapacityUnits) : _constants.DEFAULT_RCU;
     _this.writeCapacityUnits = options.table && options.table.writeCapacityUnits ? Number(options.table.writeCapacityUnits) : _constants.DEFAULT_WCU;
-
+    _this.touchInterval = options.touchInterval >= 0 ? options.touchInterval : _constants.DEFAULT_TOUCH_INTERVAL;
     // time to live
     _this.ttl = options.ttl ? options.ttl : _constants.DEFAULT_TTL;
 
@@ -185,7 +185,9 @@ var DynamoDBStore = function (_Store) {
                   expires = this.getExpirationDate(sess);
                   params = {
                     TableName: this.tableName,
-                    Item: (_Item = {}, (0, _defineProperty3.default)(_Item, this.hashKey, sessionId), (0, _defineProperty3.default)(_Item, 'expires', (0, _util.toSecondsEpoch)(expires)), (0, _defineProperty3.default)(_Item, 'sess', sess), _Item)
+                    Item: (_Item = {}, (0, _defineProperty3.default)(_Item, this.hashKey, sessionId), (0, _defineProperty3.default)(_Item, 'expires', (0, _util.toSecondsEpoch)(expires)), (0, _defineProperty3.default)(_Item, 'sess', (0, _extends3.default)({}, sess, {
+                      updated: Date.now()
+                    })), _Item)
                   };
 
                   this.documentClient.put(params, callback);
@@ -332,19 +334,27 @@ var DynamoDBStore = function (_Store) {
             switch (_context5.prev = _context5.next) {
               case 0:
                 try {
-                  sessionId = this.getSessionId(sid);
-                  expires = this.getExpirationDate(sess);
-                  params = {
-                    TableName: this.tableName,
-                    Key: (0, _defineProperty3.default)({}, this.hashKey, sessionId),
-                    UpdateExpression: 'set expires = :e',
-                    ExpressionAttributeValues: {
-                      ':e': (0, _util.toSecondsEpoch)(expires)
-                    },
-                    ReturnValues: 'UPDATED_NEW'
-                  };
+                  if (!sess.updated || Number(sess.updated) + this.touchInterval <= Date.now()) {
+                    sessionId = this.getSessionId(sid);
+                    expires = this.getExpirationDate(sess);
+                    params = {
+                      TableName: this.tableName,
+                      Key: (0, _defineProperty3.default)({}, this.hashKey, sessionId),
+                      UpdateExpression: 'set expires = :e, sess.#up = :n',
+                      ExpressionAttributeNames: {
+                        '#up': 'updated'
+                      },
+                      ExpressionAttributeValues: {
+                        ':e': (0, _util.toSecondsEpoch)(expires),
+                        ':n': Date.now()
+                      },
+                      ReturnValues: 'UPDATED_NEW'
+                    };
 
-                  this.documentClient.update(params, callback);
+                    this.documentClient.update(params, callback);
+                  } else {
+                    callback(null);
+                  }
                 } catch (err) {
                   callback(err);
                 }

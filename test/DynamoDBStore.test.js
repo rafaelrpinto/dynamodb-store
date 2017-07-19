@@ -13,6 +13,7 @@ const TEST_OPTIONS = {
   dynamoConfig: {
     endpoint: process.env.AWS_DYNAMO_ENDPOINT,
   },
+  touchInterval: 0,
 };
 
 const dynamoService = new AWS.DynamoDB(TEST_OPTIONS.dynamoConfig);
@@ -354,7 +355,7 @@ describe('DynamoDBStore', () => {
             let sessionRow = await documentClient.get(params).promise();
             originalExpires = sessionRow.Item.expires;
             setTimeout(() => {
-              store.touch(sessionId, {}, async (err3) => {
+              store.touch(sessionId, sessionRow.Item.sess, async (err3) => {
                 if (err3) reject(err3);
                 else {
                   try {
@@ -369,6 +370,57 @@ describe('DynamoDBStore', () => {
                     expect(sessionRow.Item.expires).toBeGreaterThan(originalExpires);
                     // 5 seconds window for test execution
                     expect(sessionRow.Item.expires).toBeLessThan(originalExpires + 5);
+                    resolve();
+                  } catch (err4) {
+                    reject(err4);
+                  }
+                }
+              });
+            }, 2000);
+          } catch (err2) {
+            reject(err2);
+          }
+        }
+      });
+    }));
+
+  it('should not touch an existing session before the interval', () =>
+    new Promise((resolve, reject) => {
+      const options = {
+        ...TEST_OPTIONS,
+        touchInterval: 30000,
+      };
+      const store = new DynamoDBStore(options, (err) => {
+        if (err) reject(err);
+      });
+      const sessionId = uuidv4();
+      let originalExpires;
+      store.set(sessionId, {}, async (err) => {
+        if (err) reject(err);
+        else {
+          try {
+            let params = {
+              TableName: TEST_OPTIONS.table.name,
+              Key: {
+                [TEST_OPTIONS.table.hashKey]: `${TEST_OPTIONS.table.hashPrefix}${sessionId}`,
+              },
+            };
+            let sessionRow = await documentClient.get(params).promise();
+            originalExpires = sessionRow.Item.expires;
+            setTimeout(() => {
+              store.touch(sessionId, sessionRow.Item.sess, async (err3) => {
+                if (err3) reject(err3);
+                else {
+                  try {
+                    params = {
+                      TableName: TEST_OPTIONS.table.name,
+                      Key: {
+                        [TEST_OPTIONS.table.hashKey]: `${TEST_OPTIONS.table
+                          .hashPrefix}${sessionId}`,
+                      },
+                    };
+                    sessionRow = await documentClient.get(params).promise();
+                    expect(sessionRow.Item.expires).toBe(originalExpires);
                     resolve();
                   } catch (err4) {
                     reject(err4);

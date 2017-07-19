@@ -10,6 +10,7 @@ var DEFAULT_HASH_PREFIX = exports.DEFAULT_HASH_PREFIX = 'sess:';
 var DEFAULT_RCU = exports.DEFAULT_RCU = 5;
 var DEFAULT_WCU = exports.DEFAULT_WCU = 5;
 var DEFAULT_TTL = exports.DEFAULT_TTL = 86400000;
+var DEFAULT_TOUCH_INTERVAL = exports.DEFAULT_TOUCH_INTERVAL = 30000;
 var DEFAULT_CALLBACK = exports.DEFAULT_CALLBACK = function DEFAULT_CALLBACK(err) {
   if (err) {
     throw err;
