@@ -17,7 +17,7 @@ The project uses the following stack:
 
 The project was tested with Node.js 6 and Express.js 4.x.
 
-This store implements the [touch](https://github.com/expressjs/session#touch) method to allow express-session configurations to use [resave](https://github.com/expressjs/session#resave): false.
+This store implements the [touch](https://github.com/expressjs/session#storetouchsid-session-callback) method to allow express-session configurations to use [resave](https://github.com/expressjs/session#resave): false.
 
 ## Installation
 ​
