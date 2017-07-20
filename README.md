@@ -77,9 +77,9 @@ The time to live of the sessions can be controlled:
 
 #### Using cookies with the [cookie.maxAge](https://github.com/expressjs/session#cookiemaxage) property:
 
-If this property is set, the session cookie will have a fixed time to live and the cookie can only be updated if the [rolling](https://github.com/expressjs/session#rolling) session property is set to **true**.
+If this property is set, the session cookie will be set with a fixed time to live. After the specified time the session cookie will expire and a new session one will be created even if the user was still active. To avoid that you need to set the [rolling](https://github.com/expressjs/session#rolling) session property to **true** and every request will have a set-cookie response with the updated expired field.
 
-#### Using the TTL property
+#### Using the TTL property (recommended)
 
 The `ttl` property implemented by this store defines a session time to live controlled by the server that is refreshed based on the `touchInterval` property without the need to update the session cookie.
 
