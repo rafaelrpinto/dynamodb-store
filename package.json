@@ -1,7 +1,7 @@
 {
   "name": "dynamodb-store",
-  "version": "1.0.0",
-  "description": "DynamoDB session store for express 4.x",
+  "version": "1.0.1",
+  "description": "Implementation of a session storage using DynamoDB as an extension of the express-session middleware.",
   "author": "Rafael Pinto <raprp@posteo.de>",
   "main": "index.js",
   "readmeFilename": "README.md",
