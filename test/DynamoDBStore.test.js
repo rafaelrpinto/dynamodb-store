@@ -275,9 +275,15 @@ describe('DynamoDBStore', () => {
 
   it('should return null for expired sessions and keep the record', () =>
     new Promise((resolve, reject) => {
-      const store = new DynamoDBStore(TEST_OPTIONS, (err) => {
-        if (err) reject(err);
-      });
+      const store = new DynamoDBStore(
+        {
+          ...TEST_OPTIONS,
+          keepExpired: true,
+        },
+        (err) => {
+          if (err) reject(err);
+        },
+      );
       const sessionId = uuidv4();
       store.set(
         sessionId,
@@ -316,15 +322,9 @@ describe('DynamoDBStore', () => {
 
   it('should return null for expired sessions and destroy the record', () =>
     new Promise((resolve, reject) => {
-      const store = new DynamoDBStore(
-        {
-          ...TEST_OPTIONS,
-          destroyExpired: true,
-        },
-        (err) => {
-          if (err) reject(err);
-        },
-      );
+      const store = new DynamoDBStore(TEST_OPTIONS, (err) => {
+        if (err) reject(err);
+      });
       const sessionId = uuidv4();
       store.set(
         sessionId,

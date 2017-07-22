@@ -58,6 +58,7 @@ I've built a [boilerplate](https://github.com/rafaelrpinto/aws-lambda-stateful-e
     "region": "<AWS REGION>",
     "endpoint": "<DYNAMO ENDPOINT>",
   },
+  "keepExpired": false,
   "touchInterval": 30000,
   "ttl": 600000,
 }
@@ -66,6 +67,8 @@ I've built a [boilerplate](https://github.com/rafaelrpinto/aws-lambda-stateful-e
 The `table` configuration is optional. The missing properties will be replaced by [defaults](https://github.com/rafaelrpinto/dynamodb-store/blob/master/lib/constants.js). `readCapacityUnits` and `writeCapacityUnits` are only used if the table is created by this store.
 
 The `dynamoConfig` can be optional if the following environment variables are set: **AWS_ACCESS_KEY_ID**, **AWS_SECRET_ACCESS_KEY** and **AWS_REGION** (which are present on Lambda Functions running on AWS). All properties from [AWS.DynamoDB constructor](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#constructor-property) can be informed in this structure.
+
+The `keepExpired` property is optional (defaults to false). When set to false informs the store to remove from DynamoDB expired session rows when they are requested. When set to true the store will just ignores the expired rows and leave them in DynamoDB. This property does not guarantee that all expired sessions will be removed from DynamoDB, only the ones that receive requests after they expire.
 
 The `touchInterval` property defines how ofter requests should update the time to live of a session. This property is important to avoid unnecessary table writes. By default the interval allows express to touch a same session every 30 seconds. `touchInterval` = 0 will cause a touch on every request.
 
@@ -92,6 +95,8 @@ Bear in mind that DynamoDB's TTL cleanup can take up to 48 hours. Although the e
 If you have intense traffic on your application and the 48h wait period causes unnecessary storage costs, consider creating a scheduled lambda function that scans few records at a time and clears the expired.
 
 If you really want the store to be responsible for that use [this other store](https://github.com/ca98am79/connect-dynamodb) that has a `reap` mechanism to periodically clear the expired sessions manually.
+
+Setting the `keepExpired` property to **false** also helps with the the housekeeping.
 
 ## Testing
 
