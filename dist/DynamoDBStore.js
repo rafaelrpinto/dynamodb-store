@@ -79,6 +79,7 @@ var DynamoDBStore = function (_Store) {
     var _this = (0, _possibleConstructorReturn3.default)(this, (DynamoDBStore.__proto__ || (0, _getPrototypeOf2.default)(DynamoDBStore)).call(this));
 
     (0, _util.debug)('Initializing store', options);
+
     // table properties
     _this.tableName = options.table && options.table.name ? options.table.name : _constants.DEFAULT_TABLE_NAME;
     _this.hashPrefix = options.table && options.table.hashPrefix ? options.table.hashPrefix : _constants.DEFAULT_HASH_PREFIX;
@@ -86,10 +87,14 @@ var DynamoDBStore = function (_Store) {
     _this.readCapacityUnits = options.table && options.table.readCapacityUnits ? Number(options.table.readCapacityUnits) : _constants.DEFAULT_RCU;
     _this.writeCapacityUnits = options.table && options.table.writeCapacityUnits ? Number(options.table.writeCapacityUnits) : _constants.DEFAULT_WCU;
     _this.touchInterval = options.touchInterval >= 0 ? options.touchInterval : _constants.DEFAULT_TOUCH_INTERVAL;
+
     // time to live
     _this.ttl = options.ttl ? options.ttl : _constants.DEFAULT_TTL;
 
-    // Retrieves basic credentials/endpoint configs from the options
+    // housekeeping
+    _this.keepExpired = options.keepExpired ? options.keepExpired : _constants.DEFAULT_KEEP_EXPIRED_POLICY;
+
+    // dynamodb client configuration
     var dynamoConfig = options.dynamoConfig ? options.dynamoConfig : {};
     dynamoConfig = (0, _extends3.default)({}, dynamoConfig, {
       apiVersion: _constants.API_VERSION
@@ -248,12 +253,20 @@ var DynamoDBStore = function (_Store) {
               case 5:
                 result = _context3.sent;
 
-                if (result && result.Item && result.Item.expires && result.Item.expires > (0, _util.toSecondsEpoch)(new Date())) {
-                  (0, _util.debug)('Session \'' + sid + '\' found', result.Item.sess);
-                  callback(null, result.Item.sess);
-                } else {
+
+                if (!result || !result.Item) {
                   (0, _util.debug)('Session \'' + sid + '\' not found');
                   callback(null, null);
+                } else if (!result.Item.expires || result.Item.expires <= (0, _util.toSecondsEpoch)(new Date())) {
+                  (0, _util.debug)('Found session \'' + sid + '\' but it is expired');
+                  if (this.keepExpired) {
+                    callback(null, null);
+                  } else {
+                    this.destroy(sid, callback);
+                  }
+                } else {
+                  (0, _util.debug)('Session \'' + sid + '\' found', result.Item.sess);
+                  callback(null, result.Item.sess);
                 }
                 _context3.next = 13;
                 break;
@@ -306,7 +319,7 @@ var DynamoDBStore = function (_Store) {
 
               case 5:
                 (0, _util.debug)('Destroyed session \'' + sid + '\'');
-                callback(null);
+                callback(null, null);
                 _context4.next = 13;
                 break;
 
