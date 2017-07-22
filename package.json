@@ -20,18 +20,16 @@
   },
   "scripts": {
     "test": "better-npm-run test",
-    "build": "rm -rf dist && NODE_ENV=production babel lib -d dist"
+    "testLocal": "better-npm-run testLocal",
+    "build": "rm -rf dist && NODE_ENV=production babel lib -d dist",
+    "precommit": "yarn run build && git add dist && yarn run testLocal"
   },
   "betterScripts": {
+    "testLocal": {
+      "command": "jest"
+    },
     "test": {
-      "command": "jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-      "env": {
-        "AWS_ACCESS_KEY_ID": "dummyKey",
-        "AWS_SECRET_ACCESS_KEY": "dummySecret",
-        "AWS_REGION": "local",
-        "AWS_DYNAMO_ENDPOINT": "http://localhost:8000",
-        "DYNAMODB_STORE_DEBUG": "true"
-      }
+      "command": "jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
     }
   },
   "dependencies": {
@@ -52,6 +50,7 @@
     "eslint": "^4.3.0",
     "eslint-config-airbnb-base": "^11.2.0",
     "eslint-plugin-import": "^2.7.0",
+    "husky": "^0.14.3",
     "jest": "^20.0.4",
     "uuid": "^3.1.0"
   },
