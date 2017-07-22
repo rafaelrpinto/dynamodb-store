@@ -39,7 +39,7 @@ app.use(session({
     ...
 }));
 ```
-I've built a [boilerplate that uses this store](https://github.com/rafaelrpinto/aws-lambda-stateful-express-boilerplate).
+I've built a [boilerplate](https://github.com/rafaelrpinto/aws-lambda-stateful-express-boilerplate) that shows how to use this store.
 
 ## Options
 
@@ -65,11 +65,11 @@ I've built a [boilerplate that uses this store](https://github.com/rafaelrpinto/
 
 The `table` configuration is optional. The missing properties will be replaced by [defaults](https://github.com/rafaelrpinto/dynamodb-store/blob/master/lib/constants.js). `readCapacityUnits` and `writeCapacityUnits` are only used if the table is created by this store.
 
-The `dynamoConfig` can be optional if the following environment variables are set: **AWS_ACCESS_KEY_ID**, **AWS_SECRET_ACCESS_KEY** and **AWS_REGION**. Any other property from the [AWS.DynamoDB constructor](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#constructor-property) can be informed in this structure.
+The `dynamoConfig` can be optional if the following environment variables are set: **AWS_ACCESS_KEY_ID**, **AWS_SECRET_ACCESS_KEY** and **AWS_REGION** (which are present on Lambda Functions running on AWS). All properties from [AWS.DynamoDB constructor](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#constructor-property) can be informed in this structure.
 
-The `touchInterval` property defines how ofter requests should update the time to live of a session. This property is important to avoid unnecessary table writes. By default the interval allows one touch every 30 seconds. `touchInterval` = 0 will cause a touch on every request.
+The `touchInterval` property defines how ofter requests should update the time to live of a session. This property is important to avoid unnecessary table writes. By default the interval allows express to touch a same session every 30 seconds. `touchInterval` = 0 will cause a touch on every request.
 
-The `ttl` property is optional and represents the server-side controlled time to live of the sessions (in ms). See more below.
+The `ttl` property is optional (defaults to 30s) and represents the server-side controlled time to live of the sessions (in ms). See more below.
 
 ## TTL
 
@@ -77,21 +77,21 @@ The time to live of the sessions can be controlled:
 
 #### Using cookies with the [cookie.maxAge](https://github.com/expressjs/session#cookiemaxage) property:
 
-If this property is set, the session cookie will be set with a fixed time to live. After the specified time the session cookie will expire and a new session one will be created even if the user was still active. To avoid that you need to set the [rolling](https://github.com/expressjs/session#rolling) session property to **true** and every request will have a set-cookie response with the updated expired field.
+If this property is set, the session cookie will be created with a fixed 'expires' attribute. After the specified time the session cookie will expire and a new session will be created even if the user is still active. To avoid that you need update the 'expires' attribute of the session cookie on every request by setting the [rolling](https://github.com/expressjs/session#rolling) session property to **true**. This way every request will have a set-cookie response with the updated 'expires' attribute.
 
 #### Using the TTL property (recommended)
 
-The `ttl` property implemented by this store defines a session time to live controlled by the server that is refreshed based on the `touchInterval` property without the need to update the session cookie.
+By not informing a value for 'cookie.maxAge' and using the `ttl` property implemented by this store, the session cookie will not have an 'expires' field and the session time to live will be controlled by the server. The time to live will be refreshed based on the `touchInterval` property without the need to update cookies.
 
 ## Removing expired sessions
 
-To keep the table clear of expired sessions you must setup the [Time To Live](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/TTL.html) feature of DynamoDB pointingto the `expires` field.
+To keep the session table clear of expired sessions, you must setup the [Time To Live](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/TTL.html) feature of DynamoDB pointing to the `expires` field.
 
-Bear in mind that DynamoDB's TTL cleanup can take up to 48 hours. Although the expired records will be ignored by the store, they will still be in the table during this period.
+Bear in mind that DynamoDB's TTL cleanup can take up to 48 hours. Although the expired sessions will be ignored by the store, they will still be in the table during this period.
 
-If you have intense traffic on your application and the 48h wait period causes unnecessary storage costs, consider creating a scheduled lambda function that scans few records a a time and clears the expired.
+If you have intense traffic on your application and the 48h wait period causes unnecessary storage costs, consider creating a scheduled lambda function that scans few records at a time and clears the expired.
 
-If you really want the store to be responsible for that use [this other store](https://github.com/ca98am79/connect-dynamodb) that has a `reap` mechanism to periodically clear the expired entries.
+If you really want the store to be responsible for that use [this other store](https://github.com/ca98am79/connect-dynamodb) that has a `reap` mechanism to periodically clear the expired sessions manually.
 
 ## Testing
 
@@ -117,7 +117,7 @@ If you want to test with a different DynamoDB configuration, edit the variables 
 
 ## Debugging
 
-To enable debug logging of the store, set the environment variable **DYNAMODB_STORE_DEBUG** to **true** and all the store method calls show in the console:
+To enable debug logging of the store, set the environment variable **DYNAMODB_STORE_DEBUG** to **true** and all the store method calls will be shown in the console:
 
 ```bash
 Wed Jul 19 2017 23:16:04 GMT+0100 (WEST) - DYNAMODB_STORE: Skipping touch of session 'vn31s3sl3k5fHiHs1saMXNEyb_hEp1KS'
