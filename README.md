@@ -14,6 +14,7 @@ The project uses the following stack:
 - Eslint with AirBnB style
 - Jest
 - Yarn
+- Husky
 
 The project was tested with Node.js 6 and Express.js 4.x.
 
