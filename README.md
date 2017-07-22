@@ -102,23 +102,21 @@ Setting the `keepExpired` property to **false** also helps with the the housekee
 
 With a [local DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.html) running on port **8000** you just need to run:
 
-`yarn test`
+`yarn run testLocal`
 
-If you want to test with a different DynamoDB configuration, edit the variables on package.json:
+If you want to test with a different DynamoDB configuration, edit the variables on .env:
 
-```json
-{
-  "test": {
-    "command": "jest",
-    "env": {
-      "AWS_ACCESS_KEY_ID": "dummyKey",
-      "AWS_SECRET_ACCESS_KEY": "dummySecret",
-      "AWS_REGION": "eu-west-2",
-      "AWS_DYNAMO_ENDPOINT":"http://localhost:8000"
-    }
-  }
-}
+```bash
+AWS_ACCESS_KEY_ID=dummyKey
+AWS_SECRET_ACCESS_KEY=dummySecret
+AWS_REGION=local
+AWS_DYNAMO_ENDPOINT=http://localhost:8000
+DYNAMODB_STORE_DEBUG=true
 ```
+
+If you want to run the tests and see the coverage:
+
+`yarn test`
 
 ## Debugging
 
