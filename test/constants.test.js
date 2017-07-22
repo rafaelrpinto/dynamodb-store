@@ -7,6 +7,7 @@ import {
   DEFAULT_HASH_PREFIX,
   DEFAULT_TTL,
   DEFAULT_TOUCH_INTERVAL,
+  DEFAULT_DESTROY_EXPIRED_POLICY,
   API_VERSION,
 } from '../lib/constants';
 
@@ -21,6 +22,7 @@ describe('constants', () => {
     expect(DEFAULT_WCU).toBeDefined();
     expect(DEFAULT_RCU).toBeDefined();
     expect(DEFAULT_TABLE_NAME).toBeDefined();
+    expect(DEFAULT_DESTROY_EXPIRED_POLICY).toBeDefined();
   });
 
   it('default callback raises the appropriate error', () =>

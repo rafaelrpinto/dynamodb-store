@@ -273,7 +273,7 @@ describe('DynamoDBStore', () => {
       });
     }));
 
-  it('should return null for expired sessions', () =>
+  it('should return null for expired sessions and keep the record', () =>
     new Promise((resolve, reject) => {
       const store = new DynamoDBStore(TEST_OPTIONS, (err) => {
         if (err) reject(err);
@@ -289,11 +289,67 @@ describe('DynamoDBStore', () => {
         async (err) => {
           if (err) reject(err);
           else {
-            store.get(sessionId, (err2, sess) => {
+            store.get(sessionId, async (err2, sess) => {
               try {
                 if (err2) reject(err2);
                 else {
                   expect(sess).toBe(null);
+                  const params = {
+                    TableName: TEST_OPTIONS.table.name,
+                    Key: {
+                      [TEST_OPTIONS.table.hashKey]: `${TEST_OPTIONS.table.hashPrefix}${sessionId}`,
+                    },
+                  };
+                  const sessionRow = await documentClient.get(params).promise();
+                  expect(sessionRow).toBeDefined();
+                  expect(sessionRow.Item).toBeDefined();
+                  resolve();
+                }
+              } catch (error) {
+                reject(error);
+              }
+            });
+          }
+        },
+      );
+    }));
+
+  it('should return null for expired sessions and destroy the record', () =>
+    new Promise((resolve, reject) => {
+      const store = new DynamoDBStore(
+        {
+          ...TEST_OPTIONS,
+          destroyExpired: true,
+        },
+        (err) => {
+          if (err) reject(err);
+        },
+      );
+      const sessionId = uuidv4();
+      store.set(
+        sessionId,
+        {
+          cookie: {
+            maxAge: -1,
+          },
+        },
+        async (err) => {
+          if (err) reject(err);
+          else {
+            store.get(sessionId, async (err2, sess) => {
+              try {
+                if (err2) reject(err2);
+                else {
+                  expect(sess).toBe(null);
+                  const params = {
+                    TableName: TEST_OPTIONS.table.name,
+                    Key: {
+                      [TEST_OPTIONS.table.hashKey]: `${TEST_OPTIONS.table.hashPrefix}${sessionId}`,
+                    },
+                  };
+                  const sessionRow = await documentClient.get(params).promise();
+                  expect(sessionRow).toBeDefined();
+                  expect(sessionRow.Item).toBeUndefined();
                   resolve();
                 }
               } catch (error) {

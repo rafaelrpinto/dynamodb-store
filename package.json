@@ -28,7 +28,7 @@
       "env": {
         "AWS_ACCESS_KEY_ID": "dummyKey",
         "AWS_SECRET_ACCESS_KEY": "dummySecret",
-        "AWS_REGION": "eu-west-2",
+        "AWS_REGION": "local",
         "AWS_DYNAMO_ENDPOINT": "http://localhost:8000",
         "DYNAMODB_STORE_DEBUG": "true"
       }
