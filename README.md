@@ -69,7 +69,7 @@ The `dynamoConfig` can be optional if the following environment variables are se
 
 The `touchInterval` property defines how ofter requests should update the time to live of a session. This property is important to avoid unnecessary table writes. By default the interval allows express to touch a same session every 30 seconds. `touchInterval` = 0 will cause a touch on every request.
 
-The `ttl` property is optional (defaults to 30s) and represents the server-side controlled time to live of the sessions (in ms). See more below.
+The `ttl` property is optional (defaults to 1 day) and represents the server-side controlled time to live of the sessions (in ms). See more below.
 
 ## TTL
 
