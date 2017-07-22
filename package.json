@@ -35,9 +35,9 @@
     }
   },
   "dependencies": {
-    "aws-sdk": "^2.86.0",
+    "aws-sdk": "^2.88.0",
     "babel-runtime": "^6.23.0",
-    "express-session": "^1.15.3",
+    "express-session": "^1.15.4",
     "moment": "^2.18.1"
   },
   "devDependencies": {
@@ -49,13 +49,16 @@
     "babel-preset-stage-0": "^6.24.1",
     "better-npm-run": "^0.0.15",
     "coveralls": "^2.13.1",
-    "eslint": "^4.2.0",
+    "eslint": "^4.3.0",
     "eslint-config-airbnb-base": "^11.2.0",
     "eslint-plugin-import": "^2.7.0",
     "jest": "^20.0.4",
     "uuid": "^3.1.0"
   },
-  "files": ["dist/", "index.js"],
+  "files": [
+    "dist/",
+    "index.js"
+  ],
   "jest": {
     "testEnvironment": "node",
     "rootDir": "test",
@@ -63,5 +66,12 @@
       "\\.js$": "babel-jest"
     }
   },
-  "keywords": ["dynamo", "dynamodb", "session", "session-store", "express-session", "express"]
+  "keywords": [
+    "dynamo",
+    "dynamodb",
+    "session",
+    "session-store",
+    "express-session",
+    "express"
+  ]
 }
