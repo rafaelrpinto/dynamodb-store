@@ -6,6 +6,8 @@ dynamodb-store
 Implementation of a session storage using [DynamoDB](https://aws.amazon.com/dynamodb/)
 as an extension of the [express-session middleware](https://github.com/expressjs/session).
 
+**The minimum Node.js version required by this module is 6.x**.
+
 The project uses the following stack:
 
 - ES2017
@@ -16,7 +18,7 @@ The project uses the following stack:
 - Yarn
 - Husky
 
-The project was tested with Express.js 4.x. The minimum Node.js version required by this module is 6.x.
+The project was tested with Express.js 4.x.
 
 This store implements the [touch](https://github.com/expressjs/session#storetouchsid-session-callback) method to allow express-session configurations to use [resave](https://github.com/expressjs/session#resave): false.
 
