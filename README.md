@@ -12,7 +12,6 @@ The project uses the following stack:
 
 - ES2017
 - Babel
-- Moment.js
 - Eslint with AirBnB style
 - Jest
 - Yarn
