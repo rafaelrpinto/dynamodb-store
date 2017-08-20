@@ -21,7 +21,7 @@
   "scripts": {
     "test": "better-npm-run test",
     "testLocal": "better-npm-run testLocal",
-    "build": "rm -rf dist && NODE_ENV=production babel lib -d dist",
+    "build": "rm -rf dist && NODE_ENV=production babel lib -d dist --source-maps  ",
     "precommit": "yarn run build && git add dist && yarn run testLocal"
   },
   "betterScripts": {
@@ -33,22 +33,21 @@
     }
   },
   "dependencies": {
-    "aws-sdk": "^2.88.0",
-    "babel-runtime": "^6.23.0",
-    "express-session": "^1.15.4",
+    "aws-sdk": "^2.100.0",
+    "express-session": "^1.15.5",
     "moment": "^2.18.1"
   },
   "devDependencies": {
-    "babel-cli": "^6.24.1",
-    "babel-core": "^6.25.0",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
     "babel-jest": "^20.0.3",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-latest": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
-    "better-npm-run": "^0.0.15",
+    "better-npm-run": "^0.1.0",
     "coveralls": "^2.13.1",
-    "eslint": "^4.3.0",
-    "eslint-config-airbnb-base": "^11.2.0",
+    "eslint": "^4.5.0",
+    "eslint-config-airbnb-base": "^11.3.1",
     "eslint-plugin-import": "^2.7.0",
     "husky": "^0.14.3",
     "jest": "^20.0.4",
