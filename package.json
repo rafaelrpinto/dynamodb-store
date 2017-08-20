@@ -1,6 +1,6 @@
 {
   "name": "dynamodb-store",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Implementation of a session storage using DynamoDB as an extension of the express-session middleware.",
   "author": "Rafael Pinto <raprp@posteo.de>",
   "main": "index.js",
@@ -34,8 +34,7 @@
   },
   "dependencies": {
     "aws-sdk": "^2.100.0",
-    "express-session": "^1.15.5",
-    "moment": "^2.18.1"
+    "express-session": "^1.15.5"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
