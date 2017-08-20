@@ -12,6 +12,10 @@ const TEST_OPTIONS = {
   },
   dynamoConfig: {
     endpoint: process.env.AWS_DYNAMO_ENDPOINT,
+    maxRetries: 0,
+    httpOptions: {
+      connectTimeout: 1000,
+    },
   },
   touchInterval: 0,
 };
