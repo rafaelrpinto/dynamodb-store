@@ -287,6 +287,7 @@ describe('DynamoDBStore', () => {
       const store = new DynamoDBStore(TEST_OPTIONS, (err) => {
         if (err) reject(err);
       });
+      store.documentClient = null;
       store.get(null, (err) => {
         try {
           expect(err).toBeDefined();
@@ -438,6 +439,7 @@ describe('DynamoDBStore', () => {
       const store = new DynamoDBStore(TEST_OPTIONS, (err) => {
         if (err) reject(err);
       });
+      store.documentClient = null;
       store.destroy(null, (err) => {
         try {
           expect(err).toBeDefined();
