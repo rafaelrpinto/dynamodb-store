@@ -1,2 +1,1 @@
 'use strict';Object.defineProperty(exports,'__esModule',{value:true});exports.toSecondsEpoch=toSecondsEpoch;exports.debug=debug;function toSecondsEpoch(date){if(!(date instanceof Date)){throw new Error(`${date} is not a Date!`)}return Math.floor(date.getTime()/1000)}function debug(message,object){if(process.env.DYNAMODB_STORE_DEBUG){const argument=object!==null&&object!==undefined?object:'';console.log(`${new Date} - DYNAMODB_STORE: ${message}`,typeof argument==='object'?JSON.stringify(argument):argument)}}
-//# sourceMappingURL=util.js.map

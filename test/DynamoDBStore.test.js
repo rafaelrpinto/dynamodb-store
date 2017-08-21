@@ -17,6 +17,7 @@ const TEST_OPTIONS = {
       connectTimeout: 1000,
     },
   },
+  ttl: 10000,
   touchInterval: 0,
 };
 
@@ -102,9 +103,15 @@ describe('DynamoDBStore', () => {
 
   it('should create session with default ttl', () =>
     new Promise((resolve, reject) => {
-      const store = new DynamoDBStore(TEST_OPTIONS, (err) => {
-        if (err) reject(err);
-      });
+      const store = new DynamoDBStore(
+        {
+          ...TEST_OPTIONS,
+          ttl: undefined,
+        },
+        (err) => {
+          if (err) reject(err);
+        },
+      );
       const sessionId = uuidv4();
       const name = uuidv4();
       store.set(sessionId, { name }, async (err) => {
@@ -203,6 +210,22 @@ describe('DynamoDBStore', () => {
       );
     }));
 
+  it('should handle errors creating sessions', () =>
+    new Promise((resolve, reject) => {
+      const store = new DynamoDBStore(TEST_OPTIONS, (err) => {
+        if (err) reject(err);
+      });
+      const sessionId = uuidv4();
+      store.set(sessionId, null, async (err) => {
+        try {
+          expect(err).toBeDefined();
+          resolve();
+        } catch (error) {
+          reject(error);
+        }
+      });
+    }));
+
   it('should update a session', () =>
     new Promise((resolve, reject) => {
       const store = new DynamoDBStore(TEST_OPTIONS, (err) => {
@@ -255,6 +278,21 @@ describe('DynamoDBStore', () => {
               reject(error);
             }
           });
+        }
+      });
+    }));
+
+  it('should handle errors getting sessions', () =>
+    new Promise((resolve, reject) => {
+      const store = new DynamoDBStore(TEST_OPTIONS, (err) => {
+        if (err) reject(err);
+      });
+      store.get(null, (err) => {
+        try {
+          expect(err).toBeDefined();
+          resolve();
+        } catch (error) {
+          reject(error);
         }
       });
     }));
@@ -395,6 +433,21 @@ describe('DynamoDBStore', () => {
       });
     }));
 
+  it('should handle errors destroying sessions', () =>
+    new Promise((resolve, reject) => {
+      const store = new DynamoDBStore(TEST_OPTIONS, (err) => {
+        if (err) reject(err);
+      });
+      store.destroy(null, (err) => {
+        try {
+          expect(err).toBeDefined();
+          resolve();
+        } catch (error) {
+          reject(error);
+        }
+      });
+    }));
+
   it('should touch an existing session', () =>
     new Promise((resolve, reject) => {
       const store = new DynamoDBStore(TEST_OPTIONS, (err) => {
@@ -493,5 +546,41 @@ describe('DynamoDBStore', () => {
           }
         }
       });
+    }));
+
+  it('should handle errors touching sessions', () =>
+    new Promise((resolve, reject) => {
+      const store = new DynamoDBStore(TEST_OPTIONS, (err) => {
+        if (err) reject(err);
+      });
+      store.touch(null, null, (err) => {
+        try {
+          expect(err).toBeDefined();
+          resolve();
+        } catch (error) {
+          reject(error);
+        }
+      });
+    }));
+
+  it('should handle errors creating the session table', () =>
+    new Promise((resolve, reject) => {
+      // eslint-disable-next-line
+      new DynamoDBStore(
+        {
+          ...TEST_OPTIONS,
+          table: {
+            name: 1,
+          },
+        },
+        (err) => {
+          try {
+            expect(err).toBeDefined();
+            resolve();
+          } catch (error) {
+            reject(error);
+          }
+        },
+      );
     }));
 });

@@ -1,6 +1,6 @@
 {
   "name": "dynamodb-store",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Implementation of a session storage using DynamoDB as an extension of the express-session middleware.",
   "author": "Rafael Pinto <raprp@posteo.de>",
   "main": "index.js",
@@ -21,7 +21,7 @@
   "scripts": {
     "test": "better-npm-run test",
     "testLocal": "better-npm-run testLocal",
-    "build": "rm -rf dist && NODE_ENV=production babel lib -d dist --source-maps  ",
+    "build": "rm -rf dist && NODE_ENV=production babel lib -d dist",
     "precommit": "yarn run build && git add dist && yarn run testLocal"
   },
   "betterScripts": {
