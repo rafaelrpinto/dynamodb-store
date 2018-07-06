@@ -27,6 +27,13 @@ This store implements the [touch](https://github.com/expressjs/session#storetouc
 or
 `npm install --save dynamodb-store`
 
+## Example
+
+You can find a workign example [here](https://github.com/rafaelrpinto/aws-lambda-stateful-express-boilerplate)
+
+## Serverless Tip
+
+AWS SDK is set as optional dependency, so use the `--no-optional-dependencies`to avoid shipping it (lambda containers already have it).
 
 ## Usage
 
