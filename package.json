@@ -33,8 +33,10 @@
     }
   },
   "dependencies": {
-    "aws-sdk": "^2.100.0",
     "express-session": "^1.15.5"
+  },
+  "optionalDependencies": {
+    "aws-sdk": "^2.100.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
