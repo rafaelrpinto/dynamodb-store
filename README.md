@@ -29,7 +29,7 @@ or
 
 ## Example
 
-You can find a workign example [here](https://github.com/rafaelrpinto/aws-lambda-stateful-express-boilerplate)
+You can find a working example [here](https://github.com/rafaelrpinto/aws-lambda-stateful-express-boilerplate)
 
 ## Serverless Tip
 
