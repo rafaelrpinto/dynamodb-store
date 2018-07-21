@@ -2,7 +2,7 @@
   "name": "dynamodb-store",
   "version": "1.0.8",
   "description": "Implementation of a session storage using DynamoDB as an extension of the express-session middleware.",
-  "author": "Rafael Pinto <raprp@posteo.de>",
+  "author": "Rafael Pinto <meuemail@posteo.pt>",
   "main": "index.js",
   "readmeFilename": "README.md",
   "license": "MIT",
