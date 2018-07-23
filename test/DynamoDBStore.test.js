@@ -1,4 +1,4 @@
-import AWS from 'aws-sdk';
+import AWS from 'aws-sdk'; // eslint-disable-line
 import uuidv4 from 'uuid/v4';
 import DynamoDBStore from '../lib/DynamoDBStore';
 import { toSecondsEpoch } from '../lib/util';
@@ -36,6 +36,7 @@ beforeAll(async () => {
       WriteCapacityUnits: 5,
     },
   };
+
   return dynamoService.createTable(params).promise();
 });
 
@@ -477,8 +478,9 @@ describe('DynamoDBStore', () => {
                     params = {
                       TableName: TEST_OPTIONS.table.name,
                       Key: {
-                        [TEST_OPTIONS.table.hashKey]: `${TEST_OPTIONS.table
-                          .hashPrefix}${sessionId}`,
+                        [TEST_OPTIONS.table.hashKey]: `${
+                          TEST_OPTIONS.table.hashPrefix
+                        }${sessionId}`,
                       },
                     };
                     sessionRow = await documentClient.get(params).promise();
@@ -530,8 +532,9 @@ describe('DynamoDBStore', () => {
                     params = {
                       TableName: TEST_OPTIONS.table.name,
                       Key: {
-                        [TEST_OPTIONS.table.hashKey]: `${TEST_OPTIONS.table
-                          .hashPrefix}${sessionId}`,
+                        [TEST_OPTIONS.table.hashKey]: `${
+                          TEST_OPTIONS.table.hashPrefix
+                        }${sessionId}`,
                       },
                     };
                     sessionRow = await documentClient.get(params).promise();

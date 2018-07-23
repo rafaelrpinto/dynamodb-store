@@ -2,15 +2,16 @@
   "comments": false,
   "minified": true,
   "presets": [
+    ["flow"],
     [
       "env",
       {
-        "targets": {
-          "node": ["6"]
-        }
+        "targets": { "node": "6.10" },
+        "useBuiltIns": true,
+        "modules": "commonjs",
+        "loose": true
       }
     ],
-    "es2017",
     "stage-0"
   ],
   "plugins": []
