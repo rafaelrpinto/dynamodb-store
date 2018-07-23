@@ -16,6 +16,7 @@ The project uses the following stack:
 - Jest
 - Yarn
 - Husky
+- Flow
 
 The project was tested with Express.js 4.x.
 
@@ -26,10 +27,6 @@ This store implements the [touch](https://github.com/expressjs/session#storetouc
 `yarn add dynamodb-store`
 or
 `npm install --save dynamodb-store`
-
-## Example
-
-You can find a working example [here](https://github.com/rafaelrpinto/aws-lambda-stateful-express-boilerplate)
 
 ## Serverless Tip
 
