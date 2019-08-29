@@ -17,7 +17,6 @@ const TEST_OPTIONS = {
       connectTimeout: 1000,
     },
   },
-  ttl: 10000,
   touchInterval: 0,
 };
 
