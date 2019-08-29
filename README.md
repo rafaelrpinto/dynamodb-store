@@ -1,6 +1,6 @@
 # dynamodb-store
 
-![Build Status](https://travis-ci.org/rafaelrpinto/dynamodb-store.svg?branch=master) [![Coverage Status](https://coveralls.io/repos/github/rafaelrpinto/dynamodb-store/badge.svg?branch=master)](https://coveralls.io/github/rafaelrpinto/dynamodb-store?branch=master) [![Code Climate](https://codeclimate.com/github/rafaelrpinto/dynamodb-store.svg)](https://codeclimate.com/github/rafaelrpinto/dynamodb-store) ![Dependencies](https://david-dm.org/rafaelrpinto/dynamodb-store.svg) ![NPM Downloads](https://img.shields.io/npm/dt/dynamodb-store.svg) ![NPM version](https://img.shields.io/npm/v/dynamodb-store.svg) ![rich](https://img.shields.io/badge/Become%20a%20millionaire-failing-red.svg)
+![Build Status](https://travis-ci.org/rafaelrpinto/dynamodb-store.svg?branch=master) [![Coverage Status](https://coveralls.io/repos/github/rafaelrpinto/dynamodb-store/badge.svg?branch=master)](https://coveralls.io/github/rafaelrpinto/dynamodb-store?branch=master) [![Code Climate](https://codeclimate.com/github/rafaelrpinto/dynamodb-store.svg)](https://codeclimate.com/github/rafaelrpinto/dynamodb-store) ![Dependencies](https://david-dm.org/rafaelrpinto/dynamodb-store.svg)
 
 Implementation of a session storage using [DynamoDB](https://aws.amazon.com/dynamodb/)
 as an extension of the [express-session middleware](https://github.com/expressjs/session).
