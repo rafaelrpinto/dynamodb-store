@@ -1,7 +1,6 @@
-dynamodb-store
-===============
-![Build Status](https://travis-ci.org/rafaelrpinto/dynamodb-store.svg?branch=master) [![Coverage Status](https://coveralls.io/repos/github/rafaelrpinto/dynamodb-store/badge.svg?branch=master)](https://coveralls.io/github/rafaelrpinto/dynamodb-store?branch=master) [![Code Climate](https://codeclimate.com/github/rafaelrpinto/dynamodb-store.svg)](https://codeclimate.com/github/rafaelrpinto/dynamodb-store) ![Dependencies](https://david-dm.org/rafaelrpinto/dynamodb-store.svg) ![NPM Downloads](https://img.shields.io/npm/dt/dynamodb-store.svg) ![NPM version](https://img.shields.io/npm/v/dynamodb-store.svg) ![rich](https://img.shields.io/badge/Become%20a%20millionaire-failing-red.svg)
+# dynamodb-store
 
+![Build Status](https://travis-ci.org/rafaelrpinto/dynamodb-store.svg?branch=master) [![Coverage Status](https://coveralls.io/repos/github/rafaelrpinto/dynamodb-store/badge.svg?branch=master)](https://coveralls.io/github/rafaelrpinto/dynamodb-store?branch=master) [![Code Climate](https://codeclimate.com/github/rafaelrpinto/dynamodb-store.svg)](https://codeclimate.com/github/rafaelrpinto/dynamodb-store) ![Dependencies](https://david-dm.org/rafaelrpinto/dynamodb-store.svg) ![NPM Downloads](https://img.shields.io/npm/dt/dynamodb-store.svg) ![NPM version](https://img.shields.io/npm/v/dynamodb-store.svg) ![rich](https://img.shields.io/badge/Become%20a%20millionaire-failing-red.svg)
 
 Implementation of a session storage using [DynamoDB](https://aws.amazon.com/dynamodb/)
 as an extension of the [express-session middleware](https://github.com/expressjs/session).
@@ -23,6 +22,7 @@ The project was tested with Express.js 4.x.
 This store implements the [touch](https://github.com/expressjs/session#storetouchsid-session-callback) method to allow express-session configurations to use [resave](https://github.com/expressjs/session#resave): false.
 
 ## Installation
+
 ​
 `yarn add dynamodb-store`
 or
@@ -45,6 +45,7 @@ app.use(session({
     ...
 }));
 ```
+
 I've built a [boilerplate](https://github.com/rafaelrpinto/aws-lambda-stateful-express-boilerplate) that shows how to use this store.
 
 ## Options
@@ -62,11 +63,11 @@ I've built a [boilerplate](https://github.com/rafaelrpinto/aws-lambda-stateful-e
     "accessKeyId": "<AWS ACCESS KEY>",
     "secretAccessKey": "<AWS ACCESS KEY SECRET>",
     "region": "<AWS REGION>",
-    "endpoint": "<DYNAMO ENDPOINT>",
+    "endpoint": "<DYNAMO ENDPOINT>"
   },
   "keepExpired": false,
   "touchInterval": 30000,
-  "ttl": 600000,
+  "ttl": 600000
 }
 ```
 
@@ -90,7 +91,9 @@ If this property is set, the session cookie will be created with a fixed 'expire
 
 #### Using the TTL property (recommended)
 
-By not informing a value for 'cookie.maxAge' and using the `ttl` property implemented by this store, the session cookie will not have an 'expires' field and the session time to live will be controlled by the server. The time to live will be refreshed based on the `touchInterval` property without the need to update cookies.
+Using the `ttl` property implemented by this store the session time to live will be controlled by the server. The time to live will be refreshed based on the `touchInterval` property without the need to update cookies.
+
+If both `cookie.maxAge` and `ttl` are informed, `ttl` takes precedence.
 
 ## Removing expired sessions
 
